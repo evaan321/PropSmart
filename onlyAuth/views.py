@@ -25,7 +25,7 @@ class UserRegistrationApiView(APIView):
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
 
-            confirm_link = f'http://127.0.0.1:8000/active/{uid}/{token}'
+            confirm_link = f'https://propsmart.onrender.com/active/{uid}/{token}'
             email_subject = "Confirm Your Email"
             
             email = EmailMultiAlternatives(email_subject, f'Click this link to confirm {confirm_link}',to=[user.email])
