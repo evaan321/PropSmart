@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-r)m6wab)!py3y1evax9y6@9yvo(rn$49!#=mq6$gt^$az_=2%c
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://meme-mansion-backend.onrender.com/','https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://propsmart.onrender.com/','https://*.127.0.0.1']
 
 
 # Application definition
