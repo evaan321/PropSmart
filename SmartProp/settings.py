@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import dj_database_url
 from pathlib import Path
 import environ
 env = environ.Env()
@@ -86,14 +86,12 @@ WSGI_APPLICATION = 'SmartProp.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'SmartProp',
-       'USER': 'postgres',
-       'PASSWORD': 'Evaan123@',
-       'HOST': 'localhost',
-       'PORT': '5432',
-   }
+   'default': dj_database_url.config(
+       
+       default='postgres://smartprop_user:s0dcv26bukWAx4pWN277MWfjzbTCSzRf@dpg-cp70vra0si5c73am87g0-a.oregon-postgres.render.com/smartprop',
+   )
+    
+   
 }
 
 
