@@ -27,6 +27,7 @@ router.register('Home',RentPostView)
 router.register('Post',RentPostUserView)
 router.register('booking',BookingView)
 router.register('showBooking',ShowBookingView)
+router.register('bookmark',bookmarkView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,6 +36,8 @@ urlpatterns = [
     path('login/',UserLoginApiView.as_view(),name='login'),
     path('logout/',UserLogoutView.as_view(),name='logout'),
     path('', include(router.urls)),
+    path('password_reset/', PasswordResetRequestView.as_view(), name='password_reset'),
+    path('password_reset_confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
 
 ]
 urlpatterns += static(settings.MEDIA_URL ,document_root = settings.MEDIA_ROOT)

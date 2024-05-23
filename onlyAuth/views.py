@@ -4,13 +4,15 @@ from .serializers import *
 from rest_framework.views import APIView,Response
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
-from django.utils.encoding import force_bytes
+from django.utils.encoding import force_bytes, force_str
 from rest_framework.parsers import MultiPartParser
 from django.core.mail import EmailMultiAlternatives
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate,login,logout
 from rest_framework import generics
 from rest_framework.authtoken.models import Token
+from rest_framework import status
+from django.template.loader import render_to_string
 
 
 
@@ -75,3 +77,38 @@ class UserLogoutView(APIView):
         logout(request)
         # return redirect('login')
 
+class PasswordResetRequestView(APIView):
+    def post(self, request):
+        serializer = PasswordResetRequestSerializer(data=request.data)
+        if serializer.is_valid():
+            user = User.objects.get(email=serializer.validated_data['email'])
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            token = default_token_generator.make_token(user)
+            reset_url = f'https://propsmart.onrender.com/password_reset_confirm/{uid}/{token}/'
+            email_subject = "Password Reset Request"
+            email_body = f'Click the link below to reset your password:\n\n{reset_url}'
+            
+            email = EmailMultiAlternatives(email_subject, email_body, to=[user.email])
+            email.send()
+            
+            return Response({"detail": "Password reset link has been sent to your email."}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PasswordResetConfirmView(APIView):
+    def post(self, request, uidb64, token):
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            return Response({"detail": "Invalid token or user."}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not default_token_generator.check_token(user, token):
+            return Response({"detail": "Invalid token or token has expired."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = SetNewPasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            user.set_password(serializer.validated_data['new_password'])
+            user.save()
+            return Response({"detail": "Password has been reset successfully."}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

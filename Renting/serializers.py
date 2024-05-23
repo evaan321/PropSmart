@@ -32,4 +32,10 @@ class showBookingSerializer(serializers.ModelSerializer):
         model = Booking
         fields = '__all__'
         depth = 1
+
+class Bookmark(serializers.ModelSerializer):
+    class Meta:
+        model = fav
+        fields = '__all__'
+        depth = 1
         

@@ -23,3 +23,6 @@ class ShowBookingView(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = showBookingSerializer
 
+class bookmarkView(viewsets.ModelViewSet):
+    queryset = fav.objects.all()
+    serializer_class = Bookmark
