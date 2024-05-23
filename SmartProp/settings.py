@@ -31,6 +31,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['https://propsmart.onrender.com/','https://*.127.0.0.1']
 
+FRONTEND_URL = 'https://propsmart.netlify.app/'
 
 # Application definition
 

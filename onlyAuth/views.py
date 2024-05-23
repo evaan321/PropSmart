@@ -13,6 +13,7 @@ from rest_framework import generics
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from django.template.loader import render_to_string
+from django.conf import settings
 
 
 
@@ -84,7 +85,7 @@ class PasswordResetRequestView(APIView):
             user = User.objects.get(email=serializer.validated_data['email'])
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = default_token_generator.make_token(user)
-            reset_url = f'https://propsmart.onrender.com/password_reset_confirm/{uid}/{token}/'
+            reset_url = f'{settings.FRONTEND_URL}/presetconfirm.html?uid={uid}&token={token}'
             email_subject = "Password Reset Request"
             email_body = f'Click the link below to reset your password:\n\n{reset_url}'
             
