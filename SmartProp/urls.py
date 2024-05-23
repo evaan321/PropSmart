@@ -28,6 +28,7 @@ router.register('Post',RentPostUserView)
 router.register('booking',BookingView)
 router.register('showBooking',ShowBookingView)
 router.register('bookmark',bookmarkView)
+router.register('ShowBookmark',ShowBookmarkView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

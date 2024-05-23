@@ -37,5 +37,11 @@ class Bookmark(serializers.ModelSerializer):
     class Meta:
         model = fav
         fields = '__all__'
+
+class BookmarkShow(serializers.ModelSerializer):
+    class Meta:
+        model = fav
+        fields = '__all__'
         depth = 1
+        
         
