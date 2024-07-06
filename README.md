@@ -1,5 +1,9 @@
 Introduction
-PropSmart is an innovative solution for property managers and real estate professionals to streamline their operations and enhance the property management experience. This repository contains the backend code for the application, built using Django and Django REST framework.
+PropSmart is an innovative solution for property managers
+and real estate professionals to streamline their operations
+and enhance the property management experience. 
+This repository contains the backend code for the application,
+built using Django and Django REST framework.
 
 Features
 🔒 User Authentication: Secure user authentication using tokens.
